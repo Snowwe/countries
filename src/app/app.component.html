@@ -1,7 +1,13 @@
 <form class="form">
   <mat-form-field class="full-width">
-    <input matInput placeholder="Enter country" value="">
+    <input matInput id="inputCountry" [formControl]="inputCountry"
+           placeholder="Enter country" value="">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of countriesArr" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
-  <button mat-flat-button color="warn">Reset</button>
+  <button mat-flat-button color="warn" (click)="reset()">Reset</button>
 </form>
