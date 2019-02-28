@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
     return this.reset$
       .pipe(
         tap(() => {
-          // this.inputCountry.value = '';
+          this.inputCountry.setValue('');
           console.log('click reset');
         }),
         map(() => {
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
       .pipe(
         debounce(() => timer(2000)),
         tap(() => console.log(this.inputCountry.valueChanges)),
-        map(() => this.inputCountry.valueChanges),
+        map(() => this.inputCountry.value),
       );
   }
 
