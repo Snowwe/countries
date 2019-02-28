@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable, of, timer, merge} from 'rxjs';
+import {Observable, of, timer, merge, fromEvent} from 'rxjs';
 import {
   map, debounce,
   switchMap, delay,
@@ -19,15 +19,15 @@ export class AppComponent implements OnInit {
   reset$: Observable<any> = new Observable<any>();
   inputSource$: Observable<any> = new Observable<any>();
   combinedStream$: Observable<any> = new Observable<any>();
+  @ViewChild('buttonReset', {read: ElementRef}) buttonReset: ElementRef;
 
   constructor() {
   }
 
   ngOnInit() {
     this.inputSource$ = this.inputSource();
-    this.reset$ = this.reset();
+    this.reset();
     this.combinedStream$ = this.combinedStream();
-    // console.log(this.countriesArr);
     this.combinedStream$
       .pipe(
         distinctUntilChanged(),
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
   }
 
   reset() {
-    return this.reset$
+    return this.reset$ = fromEvent(this.buttonReset.nativeElement, 'click')
       .pipe(
         tap(() => {
           this.inputCountry.setValue('');
