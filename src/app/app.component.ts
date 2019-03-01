@@ -19,9 +19,11 @@ export class AppComponent implements OnInit {
   resetClick$: Subject<any> = new Subject<any>();
   inputSource$: Observable<any> = new Observable<any>();
   combinedStream$: Observable<any> = new Observable<any>();
+  filteredCountries: string[] = countriesArr;
 
   ngOnInit() {
     this.inputSource$ = this.inputSource();
+    // this.resetClick$.next(this.resetButtonClick());
     this.resetClick$ = this.resetButtonClick();
     this.combinedStream$ = this.combinedStream();
     this.combinedStream$
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit {
       .pipe(
         tap(() => {
           this.inputCountry.setValue('');
+          this.inputCountry.value = '*';
           console.log('click reset');
         }),
         map(() => {
@@ -55,7 +58,7 @@ export class AppComponent implements OnInit {
     return this.inputCountry.valueChanges
       .pipe(
         debounce(() => timer(2000)),
-        tap(() => console.log(this.inputCountry.valueChanges)),
+        tap(() => console.log(this.inputCountry.value)),
         map(() => this.inputCountry.value),
       );
   }
@@ -71,7 +74,7 @@ export class AppComponent implements OnInit {
     return of([])
       .pipe(
         delay(2000),
-        map(() => this.countriesArr.filter(country =>
+        map(() => this.filteredCountries = this.countriesArr.filter(country =>
           country.toLowerCase().includes(value.toLowerCase())))
       );
   }
