@@ -9,5 +9,5 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <button mat-flat-button #buttonReset color="warn">Reset</button>
+  <button mat-flat-button #buttonReset color="warn" (click)="resetClick$.next($event)">Reset</button>
 </form>
