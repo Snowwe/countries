@@ -16,16 +16,15 @@ import {countriesArr} from './models/countries-arr.model';
 export class AppComponent implements OnInit {
   inputCountry = new FormControl();
   countriesArr: string[] = countriesArr;
-  resetClick$: Subject<any> = new Subject<any>();
-  inputSource$: Observable<any> = new Observable<any>();
-  combinedStream$: Observable<any> = new Observable<any>();
+  resetClick$ = new Subject<string>();
+  inputSource$  = new Observable<string>();
+  combinedStream$ = new Observable<string>();
   filteredCountries: string[] = countriesArr;
 
   ngOnInit() {
-    this.inputSource$ = this.inputSource();
-    // this.resetClick$.next(this.resetButtonClick());
-    this.resetClick$ = this.resetButtonClick();
-    this.combinedStream$ = this.combinedStream();
+    this.inputSource$ = this.getInputSource();
+    this.resetClick$ = this.getResetButtonClick();
+    this.combinedStream$ = this.getCombinedStream();
     this.combinedStream$
       .pipe(
         distinctUntilChanged(),
@@ -34,13 +33,13 @@ export class AppComponent implements OnInit {
           if (country.cancelRequest) {
             return of([]);
           }
-          return this.filterCountriesNew(country);
+          return this.filterCountries(country);
         }),
         tap(() => console.log('After')),
       ).subscribe(event => console.log(event));
   }
 
-  resetButtonClick() {
+  getResetButtonClick() {
     return this.resetClick$
       .pipe(
         tap(() => {
@@ -54,7 +53,7 @@ export class AppComponent implements OnInit {
       );
   }
 
-  inputSource() {
+  getInputSource() {
     return this.inputCountry.valueChanges
       .pipe(
         debounce(() => timer(2000)),
@@ -63,14 +62,14 @@ export class AppComponent implements OnInit {
       );
   }
 
-  combinedStream() {
+  getCombinedStream() {
     return merge(
       this.inputSource$,
       this.resetClick$,
     );
   }
 
-  filterCountriesNew(value: string) {
+  filterCountries(value: string) {
     return of([])
       .pipe(
         delay(2000),
