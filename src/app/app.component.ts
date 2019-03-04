@@ -41,7 +41,10 @@ export class AppComponent implements OnInit {
         })
       );
 
-    this.combinedStream$ = this.getCombinedStream();
+    this.combinedStream$ = merge(
+      this.inputSource$,
+      this.resetClick$,
+    );
     this.combinedStream$.pipe(
       distinctUntilChanged(),
       tap(() => console.log('Before')),
@@ -53,13 +56,6 @@ export class AppComponent implements OnInit {
       }),
       tap(() => console.log('After')),
     ).subscribe(event => console.log(event));
-  }
-
-  getCombinedStream() {
-    return merge(
-      this.inputSource$,
-      this.resetClick$,
-    );
   }
 
   filterCountries(value: string) {
