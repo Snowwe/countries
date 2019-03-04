@@ -21,18 +21,6 @@ export class AppComponent implements OnInit {
   combinedStream$ = new Observable<string>();
   filteredCountries: string[] = [];
 
-  resetClick$ = this.resetClick$
-    .pipe(
-      tap(() => {
-        this.inputCountry.setValue('');
-        this.inputCountry.value = '*';
-        console.log('click reset');
-      }),
-      map(() => {
-        return {cancelRequest: true};
-      })
-    );
-
   ngOnInit() {
     this.inputSource$ = this.inputCountry.valueChanges
       .pipe(
