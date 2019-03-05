@@ -16,45 +16,38 @@ import {countriesArr} from './models/countries-arr.model';
 export class AppComponent implements OnInit {
   inputCountry = new FormControl();
   countriesArr: string[] = countriesArr;
-  resetClick$ = new Subject<string[]>();
-  inputSource$ = new Observable<string[]>();
-  combinedStream$ = new Observable<string[]>();
+  resetClick$ = new Subject<string>();
+  inputSource$ = new Observable<string>();
+  combinedStream$ = new Observable<string>();
   filteredCountries: string[] = [];
 
   ngOnInit() {
-    this.inputSource$ = this.inputCountry.valueChanges
-      .pipe(
-        debounce(() => timer(1000)),
-        tap(() => console.log(this.inputCountry.value)),
-        map(() => this.inputCountry.value),
-        distinctUntilChanged(),
-        tap(() => console.log('Before')),
-        switchMap(country => {
-          return this.filterCountries(country);
-        }),
-        tap(() => console.log('After')),
-      );
-
-    this.resetClick$ = this.resetClick$
-      .pipe(
-        tap(() => {
-          this.inputCountry.setValue('');
-        }),
-        map(() => {
-          return {cancelRequest: true};
-        }),
-        switchMap(() => {
-          return of([]);
-        }),
-      );
+    this.inputSource$ = this.inputCountry.valueChanges;
 
     this.combinedStream$ = merge(
       this.inputSource$,
       this.resetClick$,
     );
 
-    this.combinedStream$.subscribe(event => console.log(event));
+    this.combinedStream$.pipe(
+      debounce(() => timer(1000)),
+      map(() => this.inputCountry.value),
+      distinctUntilChanged(),
+      tap(() => console.log('Before')),
+      switchMap(country => {
+        if (this.inputCountry.value === '') {
+          return of([]);
+        }
+        return this.filterCountries(country);
+      }),
+      tap(() => console.log('After')),
+    ).subscribe(event => console.log(event));
 
+  }
+
+  resetInputValue() {
+    this.inputCountry.setValue('');
+    this.resetClick$.next();
   }
 
   filterCountries(value: string) {
