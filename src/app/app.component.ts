@@ -6,22 +6,41 @@ import {
   switchMap, delay,
   tap, distinctUntilChanged,
 } from 'rxjs/operators';
-import {countriesArr} from './models/countries-arr.model';
+import {ApiService} from './services/api.service';
+
+export interface MySource {
+  userId: number;
+  id?: number;
+  title?: string;
+  completed?: boolean;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [ApiService],
 })
 export class AppComponent implements OnInit {
   inputCountry = new FormControl();
-  countriesArr: string[] = countriesArr;
+  countriesArr: MySource[];
   resetClick$ = new Subject<string>();
   inputSource$ = new Observable<string>();
   combinedStream$ = new Observable<string>();
-  filteredCountries: string[] = [];
+  filteredCountries: MySource[] = [];
+
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit() {
+    this.apiService.get('https://jsonplaceholder.typicode.com/posts')
+      .subscribe((value: MySource[]) => {
+          this.countriesArr = value;
+        },
+        error => {
+          console.log(error);
+        });
+
     this.inputSource$ = this.inputCountry.valueChanges;
 
     this.combinedStream$ = merge(
@@ -51,11 +70,13 @@ export class AppComponent implements OnInit {
   }
 
   filterCountries(value: string) {
+    const filterValue = value.toLowerCase();
     return of([])
       .pipe(
         delay(1000),
-        map(() => this.filteredCountries = this.countriesArr.filter(country =>
-          country.toLowerCase().includes(value.toLowerCase())))
+        map(() => this.filteredCountries = this.countriesArr.filter(country => {
+          return country.title.toLowerCase().indexOf(filterValue) === 0;
+        }))
       );
   }
 }

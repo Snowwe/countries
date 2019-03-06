@@ -3,8 +3,8 @@
     <input matInput [formControl]="inputCountry" placeholder="Enter country"
            [matAutocomplete]="auto" autofocus>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredCountries" [value]="option">
-        {{option}}
+      <mat-option *ngFor="let option of filteredCountries" [value]="option.title">
+        {{option.title}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

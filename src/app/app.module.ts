@@ -9,6 +9,7 @@ import {
   MatAutocompleteModule,
   MatFormFieldModule,
 } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {
     MatButtonModule,
     MatAutocompleteModule,
     MatFormFieldModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
