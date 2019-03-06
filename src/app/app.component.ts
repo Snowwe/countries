@@ -49,10 +49,10 @@ export class AppComponent implements OnInit {
     );
 
     this.combinedStream$.pipe(
+      tap(() => this.filteredCountries = []),
       debounce(() => timer(500)),
       map(() => this.inputCountry.value),
       distinctUntilChanged(),
-      tap(() => this.filteredCountries = []),
       switchMap(country => {
         if (this.inputCountry.value === '') {
           return of([]);
