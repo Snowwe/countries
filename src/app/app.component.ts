@@ -49,10 +49,10 @@ export class AppComponent implements OnInit {
     );
 
     this.combinedStream$.pipe(
-      debounce(() => timer(1000)),
+      debounce(() => timer(500)),
       map(() => this.inputCountry.value),
       distinctUntilChanged(),
-      tap(() => console.log('Before')),
+      tap(() => this.filteredCountries = []),
       switchMap(country => {
         if (this.inputCountry.value === '') {
           return of([]);
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return of([])
       .pipe(
-        delay(1000),
+        delay(500),
         map(() => this.filteredCountries = this.countriesArr.filter(country => {
           return country.title.toLowerCase().indexOf(filterValue) === 0;
         }))
