@@ -2,12 +2,18 @@
   min-width: 150px;
   max-width: 500px;
   width: 100%;
+  margin: 20px 0 0 20px;
 }
 
 .full-width {
   width: 80%;
 }
-button{
+
+button {
   width: 18%;
   margin: 0 1%;
+}
+
+ngx-spinner[_ngcontent-c0] {
+  opacity: 0.3;
 }

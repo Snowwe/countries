@@ -10,6 +10,7 @@ import {
   MatFormFieldModule,
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

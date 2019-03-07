@@ -2,12 +2,21 @@
   <mat-form-field class="full-width">
     <input matInput [formControl]="inputCountry" placeholder="Enter country"
            [matAutocomplete]="auto" autofocus>
+
     <mat-autocomplete #auto="matAutocomplete">
+
       <mat-option *ngFor="let option of filteredCountries" [value]="option.title">
         {{option.title}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+
+  <ngx-spinner
+    bdColor="#f7ff75"
+    size="medium"
+    color="#3F51B5"
+    type="ball-clip-rotate-multiple"
+    fullScreen="false"></ngx-spinner>
 
   <button mat-flat-button color="warn" (click)="resetInputValue()">Reset</button>
 </form>
