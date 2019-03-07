@@ -7,7 +7,6 @@ import {
   tap, distinctUntilChanged,
 } from 'rxjs/operators';
 import {ApiService} from './services/api.service';
-import {NgxSpinnerService} from 'ngx-spinner';
 
 export interface MySource {
   userId: number;
@@ -29,9 +28,9 @@ export class AppComponent implements OnInit {
   inputSource$ = new Observable<string>();
   combinedStream$ = new Observable<string>();
   filteredCountries: MySource[] = [];
+  isLoading = false;
 
-  constructor(private apiService: ApiService,
-              private spinner: NgxSpinnerService) {
+  constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
@@ -52,8 +51,8 @@ export class AppComponent implements OnInit {
 
     this.combinedStream$.pipe(
       tap(() => this.filteredCountries = []),
+      tap(() => this.isLoading = true),
       debounce(() => timer(500)),
-      tap(() => this.spinner.show()),
       map(() => this.inputCountry.value),
       distinctUntilChanged(),
       switchMap(country => {
@@ -62,7 +61,7 @@ export class AppComponent implements OnInit {
         }
         return this.filterCountries(country);
       }),
-      tap(() => this.spinner.hide()),
+      tap(() => this.isLoading = false),
     ).subscribe(event => console.log(event));
 
   }

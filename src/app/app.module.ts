@@ -8,9 +8,9 @@ import {
   MatInputModule,
   MatAutocompleteModule,
   MatFormFieldModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatAutocompleteModule,
     MatFormFieldModule,
     HttpClientModule,
-    NgxSpinnerModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
