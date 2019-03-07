@@ -359,6 +359,9 @@ MIT
 
 @angular/material/autocomplete
 
+ngx-spinner
+MIT
+
 @angular/material/button
 
 zone.js
