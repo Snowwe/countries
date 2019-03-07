@@ -355,12 +355,11 @@ MIT
 
 @angular/material/core
 
+@angular/material/progress-spinner
+
 @angular/material/form-field
 
 @angular/material/autocomplete
-
-ngx-spinner
-MIT
 
 @angular/material/button
 
