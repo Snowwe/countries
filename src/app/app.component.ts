@@ -51,7 +51,12 @@ export class AppComponent implements OnInit {
 
     this.combinedStream$.pipe(
       tap(() => this.filteredCountries = []),
-      tap(() => this.isLoading = true),
+      tap(() => {
+          if (this.inputCountry.value !== '') {
+            return this.isLoading = true;
+          }
+        }
+      ),
       debounce(() => timer(500)),
       map(() => this.inputCountry.value),
       distinctUntilChanged(),

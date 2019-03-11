@@ -17,5 +17,8 @@ button {
 .is-loading ::ng-deep .mat-option-text {
   display: flex;
   justify-content: center;
-  padding: 10px 0;
+}
+
+.is-loading {
+  margin: 25px 0;
 }
