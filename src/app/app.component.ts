@@ -50,16 +50,13 @@ export class AppComponent implements OnInit {
     );
 
     this.combinedStream$.pipe(
-      tap(() => this.filteredCountries = []),
-      tap(() => {
-          if (this.inputCountry.value !== '') {
-            return this.isLoading = true;
-          }
-        }
-      ),
-      debounce(() => timer(500)),
       map(() => this.inputCountry.value),
+      debounce(() => timer(500)),
       distinctUntilChanged(),
+      tap(() => {
+        this.filteredCountries = [];
+        return this.isLoading = true;
+      }),
       switchMap(country => {
         if (this.inputCountry.value === '') {
           return of([]);
@@ -83,7 +80,7 @@ export class AppComponent implements OnInit {
         delay(500),
         map(() => this.filteredCountries = this.countriesArr.filter(country => {
           return country.title.toLowerCase().indexOf(filterValue) === 0;
-        }))
+        })),
       );
   }
 }
