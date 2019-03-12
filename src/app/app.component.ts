@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable, Subject, of, timer, merge} from 'rxjs';
+import {
+  Observable, Subject, of,
+  timer, merge, Subscription
+} from 'rxjs';
 import {
   map, debounce,
   switchMap, delay,
@@ -21,7 +24,7 @@ export interface MySource {
   styleUrls: ['./app.component.css'],
   providers: [ApiService],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   inputCountry = new FormControl();
   countriesArr: MySource[];
   resetClick$ = new Subject<string>();
@@ -29,6 +32,7 @@ export class AppComponent implements OnInit {
   combinedStream$ = new Observable<string>();
   filteredCountries: MySource[] = [];
   isLoading = false;
+  subscription: Subscription;
 
   constructor(private apiService: ApiService) {
   }
@@ -49,7 +53,12 @@ export class AppComponent implements OnInit {
       this.resetClick$,
     );
 
-    this.combinedStream$.pipe(
+    this.subscription = this.listenInput(this.combinedStream$);
+
+  }
+
+  listenInput(stream: Observable<string>) {
+    return stream.pipe(
       map(() => this.inputCountry.value),
       debounce(() => timer(500)),
       distinctUntilChanged(),
@@ -65,7 +74,6 @@ export class AppComponent implements OnInit {
       }),
       tap(() => this.isLoading = false),
     ).subscribe(event => console.log(event));
-
   }
 
   resetInputValue() {
@@ -82,5 +90,9 @@ export class AppComponent implements OnInit {
           return country.title.toLowerCase().indexOf(filterValue) === 0;
         })),
       );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
