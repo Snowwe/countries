@@ -7,7 +7,8 @@ import {
 import {
   map, debounce,
   switchMap, delay,
-  tap, distinctUntilChanged,
+  tap, takeUntil,
+  distinctUntilChanged,
 } from 'rxjs/operators';
 import {ApiService} from './services/api.service';
 
@@ -25,14 +26,14 @@ export interface MySource {
   providers: [ApiService],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  inputCountry = new FormControl();
-  countriesArr: MySource[];
-  resetClick$ = new Subject<string>();
-  inputSource$ = new Observable<string>();
-  combinedStream$ = new Observable<string>();
+  private inputCountry = new FormControl();
+  private countriesArr: MySource[];
+  private resetClick$ = new Subject<string>();
+  private inputSource$ = new Observable<string>();
+  private combinedStream$ = new Observable<string>();
   filteredCountries: MySource[] = [];
-  isLoading = false;
-  subscription: Subscription;
+  private isLoading = false;
+  private componentDestroyed = new Subject();
 
   constructor(private apiService: ApiService) {
   }
@@ -53,18 +54,13 @@ export class AppComponent implements OnInit, OnDestroy {
       this.resetClick$,
     );
 
-    this.subscription = this.listenInput(this.combinedStream$);
-
-  }
-
-  listenInput(stream: Observable<string>) {
-    return stream.pipe(
+    this.combinedStream$.pipe(
       map(() => this.inputCountry.value),
       debounce(() => timer(500)),
       distinctUntilChanged(),
       tap(() => {
         this.filteredCountries = [];
-        return this.isLoading = true;
+        this.isLoading = true;
       }),
       switchMap(country => {
         if (this.inputCountry.value === '') {
@@ -73,12 +69,15 @@ export class AppComponent implements OnInit, OnDestroy {
         return this.filterCountries(country);
       }),
       tap(() => this.isLoading = false),
+      takeUntil(this.componentDestroyed),
     ).subscribe(event => console.log(event));
+
   }
 
   resetInputValue() {
     this.inputCountry.setValue('');
-    this.resetClick$.next();
+    this.resetClick$
+      .next(this.inputCountry.value);
   }
 
   filterCountries(value: string) {
@@ -93,6 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.componentDestroyed.next();
+    this.componentDestroyed.complete();
   }
 }
