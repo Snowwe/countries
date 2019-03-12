@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {
   Observable, Subject, of,
-  timer, merge, Subscription
+  timer, merge,
 } from 'rxjs';
 import {
   map, debounce,
@@ -26,13 +26,13 @@ export interface MySource {
   providers: [ApiService],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private inputCountry = new FormControl();
-  private countriesArr: MySource[];
-  private resetClick$ = new Subject<string>();
-  private inputSource$ = new Observable<string>();
-  private combinedStream$ = new Observable<string>();
+  inputCountry = new FormControl();
+  countriesArr: MySource[];
+  resetClick$ = new Subject<string>();
+  inputSource$ = new Observable<string>();
+  combinedStream$ = new Observable<string>();
   filteredCountries: MySource[] = [];
-  private isLoading = false;
+  isLoading = false;
   private componentDestroyed = new Subject();
 
   constructor(private apiService: ApiService) {
