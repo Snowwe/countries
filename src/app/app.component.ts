@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   combinedStream$ = new Observable<string>();
   filteredCountries: MySource[] = [];
   isLoading = false;
+  isEmpty = false;
   private componentDestroyed = new Subject();
 
   constructor(private apiService: ApiService) {
@@ -64,8 +65,10 @@ export class AppComponent implements OnInit, OnDestroy {
       }),
       switchMap(country => {
         if (this.inputCountry.value === '') {
+          this.isEmpty = true;
           return of([]);
         }
+        this.isEmpty = false;
         return this.filterCountries(country);
       }),
       tap(() => this.isLoading = false),

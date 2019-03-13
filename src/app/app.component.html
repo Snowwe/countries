@@ -7,11 +7,15 @@
       <mat-option *ngIf="isLoading" class="is-loading">
         <mat-spinner diameter="50"></mat-spinner>
       </mat-option>
+      <mat-option *ngIf="isEmpty" disabled hidden>
+        start typing...
+      </mat-option>
       <ng-container *ngIf="!isLoading">
-        <mat-option *ngFor="let option of filteredCountries " [value]="option.title">
+        <mat-option *ngFor="let option of filteredCountries" [value]="option.title">
           <span>{{option.title}}</span>
         </mat-option>
       </ng-container>
+
     </mat-autocomplete>
   </mat-form-field>
 
