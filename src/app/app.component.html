@@ -10,6 +10,9 @@
       <mat-option *ngIf="isEmpty" disabled hidden>
         start typing...
       </mat-option>
+      <mat-option *ngIf="noMatches" disabled hidden>
+        no matches...
+      </mat-option>
       <ng-container *ngIf="!isLoading">
         <mat-option *ngFor="let option of filteredCountries" [value]="option.title">
           <span>{{option.title}}</span>

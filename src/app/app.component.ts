@@ -34,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   filteredCountries: MySource[] = [];
   isLoading = false;
   isEmpty = false;
+  noMatches = false;
   private componentDestroyed = new Subject();
 
   constructor(private apiService: ApiService) {
@@ -61,6 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       tap(() => {
         this.filteredCountries = [];
+        this.noMatches = false;
         this.isLoading = true;
       }),
       switchMap(country => {
@@ -71,7 +73,12 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isEmpty = false;
         return this.filterCountries(country);
       }),
-      tap(() => this.isLoading = false),
+      tap(() => {
+        if (this.inputCountry.value !== '' && this.filteredCountries[0] === undefined) {
+          this.noMatches = true;
+        }
+        this.isLoading = false;
+      }),
       takeUntil(this.componentDestroyed),
     ).subscribe(event => console.log(event));
 
@@ -91,6 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
         map(() => this.filteredCountries = this.countriesArr.filter(country => {
           return country.title.toLowerCase().indexOf(filterValue) === 0;
         })),
+        tap(() => console.log('fff: ' + this.filteredCountries[0]))
       );
   }
 
