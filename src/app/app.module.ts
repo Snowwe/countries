@@ -8,7 +8,8 @@ import {
   MatInputModule,
   MatAutocompleteModule,
   MatFormFieldModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatIconModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

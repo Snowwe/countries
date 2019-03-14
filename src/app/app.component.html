@@ -1,7 +1,7 @@
 <form class="form">
   <mat-form-field class="full-width">
     <input matInput [formControl]="inputCountry" placeholder="Enter country"
-           [matAutocomplete]="auto" autofocus>
+           [matAutocomplete]="auto" autofocus="autofocus">
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngIf="isLoading" class="is-loading" disabled>
@@ -20,7 +20,13 @@
       </ng-container>
 
     </mat-autocomplete>
+    <button matSuffix mat-icon-button color="warn" (click)="resetInputValue()" type="reset">
+      <i class="material-icons">
+        close
+      </i>
+    </button>
+
   </mat-form-field>
 
-  <button mat-flat-button color="warn" (click)="resetInputValue()">Reset</button>
+  <!--<button mat-flat-button color="warn" (click)="resetInputValue()" type="reset">Reset</button>-->
 </form>

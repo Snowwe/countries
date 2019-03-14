@@ -1,9 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {
-  Observable, Subject, of,
-  timer, merge,
-} from 'rxjs';
+import {Subject, of, timer, merge} from 'rxjs';
 import {
   map, debounce,
   switchMap, delay,
@@ -13,10 +10,10 @@ import {
 import {ApiService} from './services/api.service';
 
 export interface MySource {
-  userId: number;
-  id?: number;
+  userId;
+  id?;
   title?: string;
-  completed?: boolean;
+  completed?;
 }
 
 @Component({
@@ -29,8 +26,6 @@ export class AppComponent implements OnInit, OnDestroy {
   inputCountry = new FormControl();
   countriesArr: MySource[];
   resetClick$ = new Subject<string>();
-  inputSource$ = new Observable<string>();
-  combinedStream$ = new Observable<string>();
   filteredCountries: MySource[] = [];
   isLoading = false;
   isEmpty = false;
@@ -49,28 +44,31 @@ export class AppComponent implements OnInit, OnDestroy {
           console.log(error);
         });
 
-    this.inputSource$ = this.inputCountry.valueChanges;
-
-    this.combinedStream$ = merge(
-      this.inputSource$,
+    const combinedStream$ = merge(
+      this.inputCountry.valueChanges,
       this.resetClick$,
     );
 
-    this.combinedStream$.pipe(
-      map(() => this.inputCountry.value),
+    combinedStream$.pipe(
+      tap(() => {
+        if (this.inputCountry.value === '') {
+          this.filteredCountries = [];
+          this.noMatches = false;
+          this.isEmpty = true;
+        }
+      }),
       debounce(() => timer(500)),
+      map(() => this.inputCountry.value),
       distinctUntilChanged(),
       tap(() => {
-        this.filteredCountries = [];
-        this.noMatches = false;
         this.isLoading = true;
       }),
       switchMap(country => {
         if (this.inputCountry.value === '') {
-          this.isEmpty = true;
           return of([]);
         }
         this.isEmpty = false;
+        // console.log(typeof country);
         return this.filterCountries(country);
       }),
       tap(() => {
@@ -87,7 +85,9 @@ export class AppComponent implements OnInit, OnDestroy {
   resetInputValue() {
     this.inputCountry.setValue('');
     this.resetClick$
-      .next(this.inputCountry.value);
+      .pipe(tap(() => {
+        this.inputCountry.reset('');
+      }));
   }
 
   filterCountries(value: string) {
@@ -98,7 +98,6 @@ export class AppComponent implements OnInit, OnDestroy {
         map(() => this.filteredCountries = this.countriesArr.filter(country => {
           return country.title.toLowerCase().indexOf(filterValue) === 0;
         })),
-        tap(() => console.log('fff: ' + this.filteredCountries[0]))
       );
   }
 
