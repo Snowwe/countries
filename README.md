@@ -29,4 +29,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Github page
 
 `ng build --prod --output-path docs --base-href countries`
+
 `npx angular-cli-ghpages --dir=docs`
