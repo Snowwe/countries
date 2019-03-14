@@ -53,14 +53,15 @@ export class AppComponent implements OnInit, OnDestroy {
       tap(() => {
         if (this.inputCountry.value === '') {
           this.filteredCountries = [];
-          this.noMatches = false;
           this.isEmpty = true;
         }
+        this.noMatches = false;
       }),
       debounce(() => timer(500)),
       map(() => this.inputCountry.value),
       distinctUntilChanged(),
       tap(() => {
+        this.noMatches = false;
         this.isLoading = true;
       }),
       switchMap(country => {
