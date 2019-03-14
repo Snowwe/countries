@@ -68,10 +68,10 @@ export class AppComponent implements OnInit, OnDestroy {
           return of([]);
         }
         this.isEmpty = false;
-        // console.log(typeof country);
         return this.filterCountries(country);
       }),
-      tap(() => {
+      tap(event => {
+        this.filteredCountries = event;
         if (this.inputCountry.value !== '' && this.filteredCountries[0] === undefined) {
           this.noMatches = true;
         }
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
     return of([])
       .pipe(
         delay(500),
-        map(() => this.filteredCountries = this.countriesArr.filter(country => {
+        map(() => this.countriesArr.filter(country => {
           return country.title.toLowerCase().indexOf(filterValue) === 0;
         })),
       );
