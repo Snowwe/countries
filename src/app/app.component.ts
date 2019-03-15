@@ -51,18 +51,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
     combinedStream$.pipe(
       tap(() => {
-        if (this.inputCountry.value === '') {
-          this.filteredCountries = [];
-          this.isEmpty = true;
-        }
         this.noMatches = false;
-        console.log(this.resetClick$, typeof this.inputCountry.value, typeof this.resetClick$, typeof combinedStream$);
       }),
       debounce(() => timer(500)),
       map(() => this.inputCountry.value),
       distinctUntilChanged(),
       tap(() => {
-        this.noMatches = false;
+        this.isEmpty = true;
         this.isLoading = true;
       }),
       switchMap(country => {
@@ -85,13 +80,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   resetInputValue() {
-    this.filteredCountries = [];
+    this.inputCountry.setValue('');
     this.noMatches = false;
-    this.isEmpty = true;
     this.resetClick$
-      .pipe(tap(() => {
-        this.inputCountry.reset('');
-      }));
+      .pipe(
+        tap(() => {
+          this.inputCountry.reset('');
+        }),
+      );
   }
 
   filterCountries(value: string) {
