@@ -25,7 +25,7 @@ export interface MySource {
 export class AppComponent implements OnInit, OnDestroy {
   inputCountry = new FormControl();
   countriesArr: MySource[];
-  resetClick$ = new Subject<string>();
+  resetClick$ = new Subject<void>();
   filteredCountries: MySource[] = [];
   isLoading = false;
   isEmpty = false;
@@ -56,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.isEmpty = true;
         }
         this.noMatches = false;
+        console.log(this.resetClick$, typeof this.inputCountry.value, typeof this.resetClick$, typeof combinedStream$);
       }),
       debounce(() => timer(500)),
       map(() => this.inputCountry.value),
@@ -84,7 +85,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   resetInputValue() {
-    this.inputCountry.setValue('');
+    this.filteredCountries = [];
+    this.noMatches = false;
+    this.isEmpty = true;
     this.resetClick$
       .pipe(tap(() => {
         this.inputCountry.reset('');
@@ -92,7 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   filterCountries(value: string) {
-    const filterValue = value.toLowerCase();
+    const filterValue: string = value.toLowerCase();
     return of([])
       .pipe(
         delay(500),
