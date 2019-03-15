@@ -50,13 +50,11 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     combinedStream$.pipe(
-      tap(() => {
-        this.noMatches = false;
-      }),
       debounce(() => timer(500)),
       map(() => this.inputCountry.value),
       distinctUntilChanged(),
       tap(() => {
+        this.noMatches = false;
         this.isEmpty = true;
         this.isLoading = true;
       }),
@@ -81,7 +79,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   resetInputValue() {
     this.inputCountry.setValue('');
-    this.noMatches = false;
     this.resetClick$
       .pipe(
         tap(() => {
