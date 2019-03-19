@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.apiService.get('https://jsonplaceholder.typicode.com/posts')
+    this.apiService.get()
       .subscribe((value: MySource[]) => {
           this.countriesArr = value;
         },
