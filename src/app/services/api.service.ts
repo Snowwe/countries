@@ -5,12 +5,11 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   constructor(private httpClient: HttpClient) {
   }
 
-  public get() {
-    return this.httpClient.get(this.apiUrl);
+  public get(apiUrl: string) {
+    return this.httpClient.get(apiUrl);
   }
 }

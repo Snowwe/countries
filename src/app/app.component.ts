@@ -31,12 +31,13 @@ export class AppComponent implements OnInit, OnDestroy {
   isEmpty = false;
   noMatches = false;
   private componentDestroyed = new Subject();
+  apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
-    this.apiService.get()
+    this.apiService.get(this.apiUrl)
       .subscribe((value: MySource[]) => {
           this.countriesArr = value;
         },
