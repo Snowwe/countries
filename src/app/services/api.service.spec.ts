@@ -1,64 +1,31 @@
-import {TestBed} from '@angular/core/testing';
 import {ApiService} from './api.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {MySource} from '../app.component';
+import {of} from 'rxjs/internal/observable/of';
 
 describe('ApiService', () => {
-  let http: HttpTestingController;
-  let service: ApiService;
-
-  const expectedData = [
-    {userId: '1', id: '11', title: 'First', completed: true},
-    {userId: '2', id: '22', title: 'Second', completed: true},
-    {userId: '3', id: '33', title: 'Third', completed: true},
-  ];
-
+  let httpClientSpy: { get: jasmine.Spy };
+  let apiService: ApiService;
+  let apiUrl: string;
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
-      providers: [ApiService]
-    });
-
-    service = TestBed.get(ApiService);
-    http = TestBed.get(HttpTestingController);
-
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    apiService = new ApiService(<any>httpClientSpy);
+    apiUrl = 'https://jsonplaceholder.typicode.com/posts';
   });
 
-  afterEach(() => {
-    http.verify();
+  it('should return expected data (HttpClient called once)', () => {
+    const expectedData: MySource[] = [
+      {userId: '1', id: '11', title: 'First', completed: true},
+      {userId: '2', id: '22', title: 'Second', completed: true},
+      {userId: '3', id: '33', title: 'Third', completed: true},
+    ];
+
+    httpClientSpy.get.and.returnValue(of(expectedData));
+
+    apiService.get(apiUrl).subscribe(
+      data => expect(data).toEqual(expectedData, 'expected data'),
+      fail
+    );
+    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
-  it('should have made one request to GET data from expected URL', () => {
-
-    service.get().subscribe((data: object) => {
-      expect(data).toEqual(expectedData);
-    });
-    const req = http.expectOne(service.apiUrl);
-    expect(req.request.method).toEqual('GET');
-    req.flush(expectedData);
-  });
-
-  it('get should return stubbed value from a spy', () => {
-    // create `get` spy on an object representing the ValueService
-    const valueServiceSpy =
-      jasmine.createSpyObj('ApiService', ['get']);
-
-    // set the value to return when the `get` spy is called.
-    const stubValue = 'stub value';
-    valueServiceSpy.get.and.returnValue(stubValue);
-
-    service = new ApiService(valueServiceSpy);
-
-    expect(service.get())
-      .toBe(stubValue, 'service returned stub value');
-    expect(valueServiceSpy.get.calls.count())
-      .toBe(1, 'spy method was called once');
-    expect(valueServiceSpy.get.calls.mostRecent().returnValue)
-      .toBe(stubValue);
-  });
 });
