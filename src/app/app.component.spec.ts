@@ -1,31 +1,68 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
+import {TestBed, async, ComponentFixture} from '@angular/core/testing';
+import {
+  MatButtonModule,
+  MatInputModule,
+  MatAutocompleteModule,
+  MatFormFieldModule,
+  MatProgressSpinnerModule,
+  MatIconModule
+} from '@angular/material';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {BrowserModule, By} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ApiService} from './services/api.service';
+import {DebugElement} from '@angular/core';
 
 describe('AppComponent', () => {
+  let comp: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let de: DebugElement;
+  let el: HTMLElement;
+  let elInput: HTMLElement;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      declarations: [AppComponent],
+      imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        HttpClientModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
       ],
-    }).compileComponents();
+      providers: [ApiService],
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(AppComponent);
+      comp = fixture.componentInstance;
+      de = fixture.debugElement;
+      el = de.nativeElement;
+      elInput = de.nativeElement;
+      fixture.detectChanges();
+    });
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  it('should create the app', async(() => {
+    expect(comp).toBeTruthy();
+  }));
 
-  it(`should have as title 'countries'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('countries');
-  });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to countries!');
-  });
+  it(`should set reset to true`, async(() => {
+    comp.resetInputValue();
+    expect(comp.resetClick$).toBeTruthy();
+  }));
+
+  it(`should call the reset method`, async(() => {
+    spyOn(comp, 'resetInputValue').and.callThrough();
+    const resetButton = de.query(By.css('button'));
+    resetButton.triggerEventHandler('click', null);
+    expect(comp.resetInputValue).toHaveBeenCalled();
+  }));
 });
