@@ -45,11 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
           console.log(error);
         });
 
-    this.subscribeInputChange();
-  }
-
-  subscribeInputChange() {
-
     const combinedStream$ = merge(
       this.inputCountry.valueChanges,
       this.resetClick$,
