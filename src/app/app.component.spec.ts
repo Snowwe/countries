@@ -115,4 +115,18 @@ describe('AppComponent', () => {
     expect(component.filteredCountries[0].title).toContain(expectedData[0].title);
   }));
 
+  it('should get filterCountries method enter \'f\' then \'s\'', fakeAsync(() => {
+    fixture.detectChanges();
+    const nameInput: HTMLInputElement = hostElement.querySelector('input');
+    nameInput.value = 'f';
+    tick(500);
+    nameInput.value = 's';
+    nameInput.dispatchEvent(new Event('input'));
+    component.countriesArr = expectedData;
+    component.filterCountries(nameInput.value);
+    tick(1000);
+    fixture.detectChanges();
+    expect(component.filteredCountries[0].title).toContain(expectedData[1].title);
+  }));
+
 });
