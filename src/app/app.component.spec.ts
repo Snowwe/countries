@@ -1,6 +1,6 @@
-import {AppComponent} from './app.component';
+import {AppComponent, MySource} from './app.component';
 import {MockApiService} from './services/api.service.mock';
-import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
+import {TestBed, async, ComponentFixture, tick, inject, fakeAsync} from '@angular/core/testing';
 import {
   MatButtonModule,
   MatInputModule,
@@ -18,15 +18,22 @@ import {DebugElement} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 
+const expectedData: MySource[] = [
+  {userId: '1', id: '11', title: 'First', completed: true},
+  {userId: '2', id: '22', title: 'Second', completed: true},
+  {userId: '3', id: '33', title: 'Third', completed: true},
+];
+
 describe('AppComponent', () => {
 
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let de: DebugElement;
   let el: HTMLElement;
+  let apiUrl: string;
   let apiService: ApiService;
   let hostElement;
-  let componentService;
+
   TestBed.overrideComponent(
     AppComponent,
     {set: {providers: [{provide: ApiService, useClass: MockApiService}]}}
@@ -59,9 +66,8 @@ describe('AppComponent', () => {
       de = fixture.debugElement;
       el = de.nativeElement;
       apiService = TestBed.get(ApiService);
-
-      componentService = fixture.debugElement.injector.get(ApiService);
       fixture.detectChanges();
+      apiUrl = 'https://jsonplaceholder.typicode.com/posts';
     });
   }));
 
@@ -96,5 +102,17 @@ describe('AppComponent', () => {
     const nameOption: HTMLElement = hostElement.querySelector('span');
     expect(nameOption.textContent).toContain('Enter country');
   });
+
+  it('should get filterCountries method', fakeAsync(() => {
+    fixture.detectChanges();
+    const nameInput: HTMLInputElement = hostElement.querySelector('input');
+    nameInput.value = 'f';
+    nameInput.dispatchEvent(new Event('input'));
+    component.countriesArr = expectedData;
+    component.filterCountries(nameInput.value);
+    tick(1000);
+    fixture.detectChanges();
+    expect(component.filteredCountries[0].title).toContain(expectedData[0].title);
+  }));
 
 });

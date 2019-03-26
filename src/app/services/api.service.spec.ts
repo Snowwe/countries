@@ -40,8 +40,6 @@ describe('ApiService', () => {
   it('should get data', inject([ApiService, HttpTestingController],
     (service: ApiService, backend: HttpTestingController) => {
        service.get(apiUrl).subscribe((data: MySource[]) => {
-        console.log(data);
-        // someData = data;
         expect(data).toEqual(expectedData);
       });
       backend.expectOne({
