@@ -29,7 +29,6 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let de: DebugElement;
-  // let el: HTMLElement;
   let apiUrl: string;
   let apiService: ApiService;
   let hostElement;
@@ -64,52 +63,51 @@ describe('AppComponent', () => {
       component = fixture.componentInstance;
       hostElement = fixture.nativeElement;
       de = fixture.debugElement;
-      // el = de.nativeElement;
       apiService = TestBed.get(ApiService);
       fixture.detectChanges();
       apiUrl = 'https://jsonplaceholder.typicode.com/posts';
     });
   }));
 
-  it('should create the app', async(() => {
+  it('_01_ should create the app', async(() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should get isEmpty, isLoading, noMatches are default false', async(() => {
+  it('_02_ should get isEmpty, isLoading, noMatches are default false', async(() => {
     expect(component.isEmpty).toBeFalsy();
     expect(component.isLoading).toBeFalsy();
     expect(component.noMatches).toBeFalsy();
   }));
 
-  it('Service injected via inject(...) and TestBed.get(...) should be the same instance',
+  it('_03_ Service injected via inject(...) and TestBed.get(...) should be the same instance',
     inject([ApiService], (injectService: ApiService) => {
       expect(injectService).toBe(apiService);
     })
   );
 
-  it(`should set reset to true`, async(() => {
+  it(`_04_ should set reset to true`, async(() => {
     component.resetInputValue();
     expect(component.resetClick$).toBeTruthy();
   }));
 
-  it(`should call the reset method`, async(() => {
+  it(`_05_ should call the reset method`, async(() => {
     spyOn(component, 'resetInputValue').and.callThrough();
     const resetButton = de.query(By.css('button'));
     resetButton.triggerEventHandler('click', null);
     expect(component.resetInputValue).toHaveBeenCalled();
   }));
 
-  it('should find the input', () => {
+  it('_06_ should find the input', () => {
     const input: HTMLInputElement = de.query(By.css('input')).nativeElement;
     expect(input.textContent).toEqual('');
   });
 
-  it('should input text', () => {
+  it('_07_ should input text', () => {
     const nameOption: HTMLElement = hostElement.querySelector('span');
     expect(nameOption.textContent).toContain('Enter country');
   });
 
-  it('should get filterCountries method', fakeAsync(() => {
+  it('_08_ should get filterCountries method', fakeAsync(() => {
     fixture.detectChanges();
     const input: HTMLInputElement = hostElement.querySelector('input');
     input.value = 'f';
@@ -121,7 +119,7 @@ describe('AppComponent', () => {
     expect(component.filteredCountries[0].title).toContain(expectedData[0].title);
   }));
 
-  it('should get filterCountries method enter \'f\' then \'s\'', fakeAsync(() => {
+  it('_09_ should get filterCountries method enter \'f\' then \'s\'', fakeAsync(() => {
     fixture.detectChanges();
     const input: HTMLInputElement = hostElement.querySelector('input');
     input.value = 'f';
