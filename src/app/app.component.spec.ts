@@ -29,7 +29,7 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let de: DebugElement;
-  let el: HTMLElement;
+  // let el: HTMLElement;
   let apiUrl: string;
   let apiService: ApiService;
   let hostElement;
@@ -64,7 +64,7 @@ describe('AppComponent', () => {
       component = fixture.componentInstance;
       hostElement = fixture.nativeElement;
       de = fixture.debugElement;
-      el = de.nativeElement;
+      // el = de.nativeElement;
       apiService = TestBed.get(ApiService);
       fixture.detectChanges();
       apiUrl = 'https://jsonplaceholder.typicode.com/posts';
@@ -73,6 +73,12 @@ describe('AppComponent', () => {
 
   it('should create the app', async(() => {
     expect(component).toBeTruthy();
+  }));
+
+  it('should get isEmpty, isLoading, noMatches are default false', async(() => {
+    expect(component.isEmpty).toBeFalsy();
+    expect(component.isLoading).toBeFalsy();
+    expect(component.noMatches).toBeFalsy();
   }));
 
   it('Service injected via inject(...) and TestBed.get(...) should be the same instance',
@@ -105,11 +111,11 @@ describe('AppComponent', () => {
 
   it('should get filterCountries method', fakeAsync(() => {
     fixture.detectChanges();
-    const nameInput: HTMLInputElement = hostElement.querySelector('input');
-    nameInput.value = 'f';
-    nameInput.dispatchEvent(new Event('input'));
+    const input: HTMLInputElement = hostElement.querySelector('input');
+    input.value = 'f';
+    input.dispatchEvent(new Event('input'));
     component.countriesArr = expectedData;
-    component.filterCountries(nameInput.value);
+    component.filterCountries(input.value);
     tick(1000);
     fixture.detectChanges();
     expect(component.filteredCountries[0].title).toContain(expectedData[0].title);
@@ -117,13 +123,13 @@ describe('AppComponent', () => {
 
   it('should get filterCountries method enter \'f\' then \'s\'', fakeAsync(() => {
     fixture.detectChanges();
-    const nameInput: HTMLInputElement = hostElement.querySelector('input');
-    nameInput.value = 'f';
+    const input: HTMLInputElement = hostElement.querySelector('input');
+    input.value = 'f';
     tick(500);
-    nameInput.value = 's';
-    nameInput.dispatchEvent(new Event('input'));
+    input.value = 's';
+    input.dispatchEvent(new Event('input'));
     component.countriesArr = expectedData;
-    component.filterCountries(nameInput.value);
+    component.filterCountries(input.value);
     tick(1000);
     fixture.detectChanges();
     expect(component.filteredCountries[0].title).toContain(expectedData[1].title);
