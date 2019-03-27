@@ -10,10 +10,10 @@ import {
 import {ApiService} from './services/api.service';
 
 export interface MySource {
-  userId;
-  id?;
+  userId: string;
+  id?: string;
   title?: string;
-  completed?;
+  completed?: boolean;
 }
 
 @Component({

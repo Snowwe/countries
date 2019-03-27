@@ -37,7 +37,7 @@ describe('Api testing', () => {
       httpTestingController.verify();
     });
 
-    it('_01_ test HttpClient.get data.title', () => {
+    it('HttpClient.get and return data.title', () => {
       const testData: Data = {userId: '1', id: '11', title: 'First', completed: true};
 
       httpClient.get<Data>(testUrl)
@@ -50,7 +50,7 @@ describe('Api testing', () => {
       httpTestingController.verify();
     });
 
-    it('_03_ test multiple requests', () => {
+    it('test multiple requests', () => {
       const testData: Data[] = [
         {userId: '1', id: '11', title: 'First', completed: true},
         {userId: '2', id: '22', title: 'Second', completed: true},
@@ -73,7 +73,7 @@ describe('Api testing', () => {
       requests[2].flush(testData);
     });
 
-    it('_04_ test for 404 error', () => {
+    it('test for 404 error', () => {
       const errmsg = 'deliberate 404 error';
 
       httpClient.get<Data[]>(testUrl).subscribe(
@@ -89,7 +89,7 @@ describe('Api testing', () => {
       req.flush(errmsg, {status: 404, statusText: 'Not Found'});
     });
 
-    it('_05_ can test for network error', () => {
+    it('test for network error', () => {
       const errmsg = 'simulated network error';
 
       httpClient.get<Data[]>(testUrl).subscribe(
@@ -109,7 +109,7 @@ describe('Api testing', () => {
       req.error(errorEvent);
     });
 
-    it('_06_ httpTestingController.verify should fail if HTTP response not simulated', () => {
+    it('httpTestingController.verify should fail if HTTP response not simulated', () => {
       httpClient.get(testUrl).subscribe();
       expect(() => httpTestingController.verify()).toThrow();
       const req = httpTestingController.expectOne(testUrl);
@@ -133,11 +133,11 @@ describe('Api testing', () => {
       apiUrl = 'https://jsonplaceholder.typicode.com/posts';
     });
 
-    it('_01_ should be created service', inject([ApiService], (service: ApiService) => {
+    it('should be created service', inject([ApiService], (service: ApiService) => {
       expect(service).toBeTruthy();
     }));
 
-    it('_02_ should return stream of expected data (HttpClient called once)', () => {
+    it('should return stream of expected data (HttpClient called once)', () => {
       httpClientSpy.get.and.returnValue(of(expectedData));
       apiServiceSpy.get(apiUrl).subscribe(
         data => expect(data).toEqual(expectedData, 'expected data'),
@@ -146,7 +146,7 @@ describe('Api testing', () => {
       expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
     });
 
-    it('_03_ should return stream of expected data (inject)', inject([ApiService, HttpTestingController],
+    it('should return stream of expected data (inject)', inject([ApiService, HttpTestingController],
       (service: MockApiService, backend: HttpTestingController) => {
         service.get(apiUrl).subscribe((data: MySource[]) => {
           expect(data).toEqual(expectedData);
@@ -157,7 +157,7 @@ describe('Api testing', () => {
         }).flush(expectedData);
       }));
 
-    it('_04_ getObservableValue should return value from observable',
+    it('getObservableValue should return value from observable',
       (done: DoneFn) => {
         const service: MockApiService = new MockApiService();
         service.getObservableValue().subscribe(value => {
