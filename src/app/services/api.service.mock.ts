@@ -9,4 +9,8 @@ export class MockApiService {
   get(apiUrl: string) {
     return of([]);
   }
+
+  getObservableValue() {
+    return of('observable value' );
+  }
 }
