@@ -13,10 +13,10 @@ const expectedData: MySource[] = [
 ];
 
 interface Data {
-  userId;
-  id?;
+  userId: string;
+  id?: string;
   title?: string;
-  completed?;
+  completed?: boolean;
 }
 
 const testUrl = 'https://jsonplaceholder.typicode.com/posts';
