@@ -103,7 +103,7 @@ describe('AppComponent', () => {
   });
 
   it('should input text', () => {
-    const nameOption: HTMLElement = hostElement.querySelector('span');
+    const nameOption: HTMLSpanElement = hostElement.querySelector('span');
     expect(nameOption.textContent).toContain('Enter country');
   });
 

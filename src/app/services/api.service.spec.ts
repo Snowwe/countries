@@ -120,7 +120,7 @@ describe('Api testing', () => {
 
   describe('ApiService testing', () => {
     let httpClientSpy: { get: jasmine.Spy };
-    let apiServiceSpy: ApiService;
+    let apiService: ApiService;
     let apiUrl: string;
 
     beforeEach(() => {
@@ -129,7 +129,7 @@ describe('Api testing', () => {
         providers: [ApiService]
       });
       httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
-      apiServiceSpy = new ApiService(<any>httpClientSpy);
+      apiService = new ApiService(<any>httpClientSpy);
       apiUrl = 'https://jsonplaceholder.typicode.com/posts';
     });
 
@@ -139,7 +139,7 @@ describe('Api testing', () => {
 
     it('should return stream of expected data (HttpClient called once)', () => {
       httpClientSpy.get.and.returnValue(of(expectedData));
-      apiServiceSpy.get(apiUrl).subscribe(
+      apiService.get(apiUrl).subscribe(
         data => expect(data).toEqual(expectedData, 'expected data'),
         fail
       );
@@ -157,13 +157,19 @@ describe('Api testing', () => {
         }).flush(expectedData);
       }));
 
-    it('getObservableValue should return value from observable',
+    it('method get() should return [] from observable',
       (done: DoneFn) => {
         const service: MockApiService = new MockApiService();
-        service.getObservableValue().subscribe(value => {
-          expect(value).toBe('observable value');
+        service.get(apiUrl).subscribe(value => {
+          expect(value).toEqual([]);
           done();
         });
       });
+
+    // it('should be called get method (spy)', () => {
+    //   spyOn(apiService.get(apiUrl), 'get').and.returnValues('get method called');
+    //   expect(apiService.get(apiUrl)).toBe('get method called');
+    // });
+
   });
 });
