@@ -32,6 +32,7 @@ describe('AppComponent', () => {
   let apiUrl: string;
   let apiService: ApiService;
   let hostElement;
+  let input: HTMLInputElement;
 
   TestBed.overrideComponent(
     AppComponent,
@@ -66,6 +67,7 @@ describe('AppComponent', () => {
       apiService = TestBed.get(ApiService);
       fixture.detectChanges();
       apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+      input = fixture.debugElement.query(By.css('input')).nativeElement;
     });
   }));
 
@@ -98,7 +100,6 @@ describe('AppComponent', () => {
   }));
 
   it('should find the input', () => {
-    const input: HTMLInputElement = de.query(By.css('input')).nativeElement;
     expect(input.textContent).toEqual('');
   });
 
@@ -109,7 +110,6 @@ describe('AppComponent', () => {
 
   it('should get filterCountries method', fakeAsync(() => {
     fixture.detectChanges();
-    const input: HTMLInputElement = hostElement.querySelector('input');
     input.value = 'f';
     input.dispatchEvent(new Event('input'));
     component.countriesArr = expectedData;
@@ -121,7 +121,6 @@ describe('AppComponent', () => {
 
   it('should get filterCountries method enter \'f\' then \'s\'', fakeAsync(() => {
     fixture.detectChanges();
-    const input: HTMLInputElement = hostElement.querySelector('input');
     input.value = 'f';
     expect(component.filteredCountries).toEqual([]);
     tick(500);
@@ -135,5 +134,19 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     expect(component.filteredCountries[0].title).toContain(expectedData[1].title);
   }));
+
+  // it('isEmpty should be true', async(() => {
+  //   fixture.detectChanges();
+  //   const isEmpty: HTMLElement = hostElement.querySelector('.is-empty');
+  //   input.value = 'f';
+  //   input.value = '';
+  //   input.dispatchEvent(new Event('focus'));
+  //   input.dispatchEvent(new Event('focusin'));
+  //   input.dispatchEvent(new Event('input'));
+  //   input.dispatchEvent(new Event('keydown'));
+  //   fixture.detectChanges();
+  //   console.log(isEmpty);
+  //   expect(isEmpty).toBeTruthy();
+  // }));
 
 });
