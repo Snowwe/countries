@@ -8,10 +8,10 @@
       <mat-option *ngIf="isLoading" class="is-loading" disabled>
         <mat-spinner [diameter]="46"></mat-spinner>
       </mat-option>
-      <mat-option *ngIf="isEmpty" disabled hidden>
+      <mat-option *ngIf="isEmpty" class="is-empty" disabled hidden>
         start typing...
       </mat-option>
-      <mat-option *ngIf="noMatches" disabled hidden>
+      <mat-option *ngIf="noMatches" class="no-matches" disabled hidden>
         no matches...
       </mat-option>
       <ng-container *ngIf="!isLoading">
