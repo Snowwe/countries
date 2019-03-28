@@ -123,7 +123,10 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const input: HTMLInputElement = hostElement.querySelector('input');
     input.value = 'f';
+    expect(component.filteredCountries).toEqual([]);
     tick(500);
+    fixture.detectChanges();
+    expect(component.filteredCountries).toEqual([]);
     input.value = 's';
     input.dispatchEvent(new Event('input'));
     component.countriesArr = expectedData;
