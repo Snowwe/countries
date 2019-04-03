@@ -1,22 +1,20 @@
 import {AppComponent, MySource} from './app.component';
 import {MockApiService} from './services/api.service.mock';
-import {TestBed, async, ComponentFixture, tick, inject, fakeAsync} from '@angular/core/testing';
 import {
-  MatButtonModule,
+  TestBed, async, ComponentFixture,
+  tick, inject, fakeAsync
+} from '@angular/core/testing';
+import {
   MatInputModule,
   MatAutocompleteModule,
-  MatFormFieldModule,
   MatProgressSpinnerModule,
-  MatIconModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserModule, By} from '@angular/platform-browser';
+import {By} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ApiService} from './services/api.service';
 import {DebugElement} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterTestingModule} from '@angular/router/testing';
 
 const expectedData: MySource[] = [
   {userId: '1', id: '11', title: 'First', completed: true},
@@ -43,19 +41,13 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [
-        BrowserModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MatInputModule,
-        MatButtonModule,
         MatAutocompleteModule,
-        MatFormFieldModule,
-        HttpClientModule,
         MatProgressSpinnerModule,
-        MatIconModule,
         HttpClientTestingModule,
-        RouterTestingModule,
       ],
       providers: [{provide: ApiService, useClass: MockApiService}],
     }).compileComponents().then(() => {
@@ -74,11 +66,11 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should get isEmpty, isLoading, noMatches are default false', async(() => {
+  it('should get isEmpty, isLoading, noMatches are default false', () => {
     expect(component.isEmpty).toBeFalsy();
     expect(component.isLoading).toBeFalsy();
     expect(component.noMatches).toBeFalsy();
-  }));
+  });
 
   it('Service injected via inject(...) and TestBed.get(...) should be the same instance',
     inject([ApiService], (injectService: ApiService) => {
@@ -86,17 +78,17 @@ describe('AppComponent', () => {
     })
   );
 
-  it(`should set reset to true`, async(() => {
+  it(`should set reset to true`, () => {
     component.resetInputValue();
     expect(component.resetClick$).toBeTruthy();
-  }));
+  });
 
-  it(`should call the reset method`, async(() => {
+  it(`should call the reset method`, () => {
     spyOn(component, 'resetInputValue').and.callThrough();
     const resetButton = de.query(By.css('button'));
     resetButton.triggerEventHandler('click', null);
     expect(component.resetInputValue).toHaveBeenCalled();
-  }));
+  });
 
   it('should find the input', () => {
     expect(input.textContent).toBe('');
