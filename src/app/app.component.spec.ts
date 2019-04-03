@@ -135,18 +135,4 @@ describe('AppComponent', () => {
     expect(component.filteredCountries[0].title).toContain(expectedData[1].title);
   }));
 
-  // it('isEmpty should be true', async(() => {
-  //   fixture.detectChanges();
-  //   const isEmpty: HTMLElement = hostElement.querySelector('.is-empty');
-  //   input.value = 'f';
-  //   input.value = '';
-  //   input.dispatchEvent(new Event('focus'));
-  //   input.dispatchEvent(new Event('focusin'));
-  //   input.dispatchEvent(new Event('input'));
-  //   input.dispatchEvent(new Event('keydown'));
-  //   fixture.detectChanges();
-  //   console.log(isEmpty);
-  //   expect(isEmpty).toBeTruthy();
-  // }));
-
 });

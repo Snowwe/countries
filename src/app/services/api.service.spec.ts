@@ -47,7 +47,6 @@ describe('Api testing', () => {
       const req = httpTestingController.expectOne(testUrl);
       expect(req.request.method).toContain('GET');
       req.flush(testData);
-      httpTestingController.verify();
     });
 
     it('test multiple requests', () => {
@@ -165,11 +164,6 @@ describe('Api testing', () => {
           done();
         });
       });
-
-    // it('should be called get method (spy)', () => {
-    //   spyOn(apiService.get(apiUrl), 'get').and.returnValues('get method called');
-    //   expect(apiService.get(apiUrl)).toBe('get method called');
-    // });
 
   });
 });
