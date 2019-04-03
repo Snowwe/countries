@@ -165,10 +165,5 @@ describe('Api testing', () => {
         });
       });
 
-    // it('should be called get method (spy)', () => {
-    //   spyOn(apiService.get(apiUrl), 'get').and.returnValues('get method called');
-    //   expect(apiService.get(apiUrl)).toBe('get method called');
-    // });
-
   });
 });
