@@ -47,7 +47,6 @@ describe('Api testing', () => {
       const req = httpTestingController.expectOne(testUrl);
       expect(req.request.method).toContain('GET');
       req.flush(testData);
-      httpTestingController.verify();
     });
 
     it('test multiple requests', () => {
