@@ -59,7 +59,6 @@ describe('AppComponent', () => {
       ],
       providers: [{provide: ApiService, useClass: MockApiService}],
     }).compileComponents().then(() => {
-
       fixture = TestBed.createComponent(AppComponent);
       component = fixture.componentInstance;
       hostElement = fixture.nativeElement;

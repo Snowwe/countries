@@ -57,10 +57,8 @@ describe('Api testing', () => {
       ];
       httpClient.get<Data[]>(testUrl)
         .subscribe(d => expect(d.length).toEqual(0, 'should have no data'));
-
       httpClient.get<Data[]>(testUrl)
         .subscribe(d => expect(d).toEqual([testData[0]], 'should be one element array'));
-
       httpClient.get<Data[]>(testUrl)
         .subscribe(d => expect(d).toEqual(testData, 'should be expected data'));
 
