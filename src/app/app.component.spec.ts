@@ -13,7 +13,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ApiService} from './services/api.service';
-import {DebugElement} from '@angular/core';
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 const expectedData: MySource[] = [
@@ -49,6 +49,7 @@ describe('AppComponent', () => {
         MatProgressSpinnerModule,
         HttpClientTestingModule,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [{provide: ApiService, useClass: MockApiService}],
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(AppComponent);
