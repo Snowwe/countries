@@ -4,12 +4,11 @@ import {
   TestBed, async, ComponentFixture,
   tick, inject, fakeAsync
 } from '@angular/core/testing';
-import {MatInputModule, MatAutocompleteModule} from '@angular/material';
+import {MatAutocompleteModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ApiService} from './services/api.service';
-import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 const expectedData: MySource[] = [
@@ -22,10 +21,7 @@ describe('AppComponent', () => {
 
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let de: DebugElement;
-  let apiUrl: string;
   let apiService: ApiService;
-  let hostElement;
   let input: HTMLInputElement;
 
   TestBed.overrideComponent(
@@ -39,8 +35,6 @@ describe('AppComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatInputModule,
         MatAutocompleteModule,
         HttpClientTestingModule,
       ],
@@ -49,18 +43,15 @@ describe('AppComponent', () => {
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(AppComponent);
       component = fixture.componentInstance;
-      hostElement = fixture.nativeElement;
-      de = fixture.debugElement;
       apiService = TestBed.get(ApiService);
       fixture.detectChanges();
-      apiUrl = 'https://jsonplaceholder.typicode.com/posts';
       input = fixture.debugElement.query(By.css('input')).nativeElement;
     });
   }));
 
-  it('should create the app', async(() => {
+  it('should create the app', () => {
     expect(component).toBeTruthy();
-  }));
+  });
 
   it('should get isEmpty, isLoading, noMatches are default false', () => {
     expect(component.isEmpty).toBeFalsy();
@@ -81,7 +72,7 @@ describe('AppComponent', () => {
 
   it(`should call the reset method`, () => {
     spyOn(component, 'resetInputValue').and.callThrough();
-    const resetButton = de.query(By.css('button'));
+    const resetButton = fixture.debugElement.query(By.css('button'));
     resetButton.triggerEventHandler('click', null);
     expect(component.resetInputValue).toHaveBeenCalled();
   });
@@ -91,8 +82,7 @@ describe('AppComponent', () => {
   });
 
   it('should input text', () => {
-    const nameOption: HTMLSpanElement = hostElement.querySelector('span');
-    expect(nameOption.textContent).toContain('Enter country');
+    expect(input.placeholder).toBe('Enter country');
   });
 
   it('should get filterCountries method', fakeAsync(() => {
