@@ -4,11 +4,7 @@ import {
   TestBed, async, ComponentFixture,
   tick, inject, fakeAsync
 } from '@angular/core/testing';
-import {
-  MatInputModule,
-  MatAutocompleteModule,
-  MatProgressSpinnerModule,
-} from '@angular/material';
+import {MatInputModule, MatAutocompleteModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -46,7 +42,6 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         MatInputModule,
         MatAutocompleteModule,
-        MatProgressSpinnerModule,
         HttpClientTestingModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],
