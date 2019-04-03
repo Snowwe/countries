@@ -100,7 +100,7 @@ describe('AppComponent', () => {
   }));
 
   it('should find the input', () => {
-    expect(input.textContent).toEqual('');
+    expect(input.textContent).toBe('');
   });
 
   it('should input text', () => {
