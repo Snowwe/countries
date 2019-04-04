@@ -4,11 +4,10 @@ import {
   TestBed, ComponentFixture,
   tick, inject, fakeAsync
 } from '@angular/core/testing';
-import {MatAutocompleteModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {ApiService} from './services/api.service';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {Directive, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 const expectedData: MySource[] = [
@@ -16,6 +15,14 @@ const expectedData: MySource[] = [
   {userId: '2', id: '22', title: 'Second', completed: true},
   {userId: '3', id: '33', title: 'Third', completed: true},
 ];
+
+@Directive({
+  selector: 'mat-autocomplete',
+  exportAs: 'matAutocomplete'
+})
+
+class MatAutocompleteDirective {
+}
 
 describe('AppComponent', () => {
 
@@ -28,14 +35,14 @@ describe('AppComponent', () => {
     AppComponent,
     {set: {providers: [{provide: ApiService, useClass: MockApiService}]}}
   );
+
   beforeEach(() => {
 
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      declarations: [AppComponent, MatAutocompleteDirective],
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        MatAutocompleteModule,
         HttpClientTestingModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],
