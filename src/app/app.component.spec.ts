@@ -20,7 +20,6 @@ const expectedData: MySource[] = [
   selector: 'mat-autocomplete',
   exportAs: 'matAutocomplete'
 })
-
 class MatAutocompleteDirective {
 }
 
@@ -63,12 +62,6 @@ describe('AppComponent', () => {
     expect(component.isLoading).toBeFalsy();
     expect(component.noMatches).toBeFalsy();
   });
-
-  it('Service injected via inject(...) and TestBed.get(...) should be the same instance',
-    inject([ApiService], (injectService: ApiService) => {
-      expect(injectService).toBe(apiService);
-    })
-  );
 
   it(`should set reset to true`, () => {
     component.resetInputValue();
