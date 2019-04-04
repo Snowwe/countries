@@ -45,7 +45,6 @@ describe('AppComponent', () => {
       component = fixture.componentInstance;
       apiService = TestBed.get(ApiService);
       fixture.detectChanges();
-      input = fixture.debugElement.query(By.css('input')).nativeElement;
     });
   }));
 
@@ -78,14 +77,17 @@ describe('AppComponent', () => {
   });
 
   it('should find the input', () => {
+    input = fixture.debugElement.query(By.css('input')).nativeElement;
     expect(input.textContent).toBe('');
   });
 
   it('should input text', () => {
+    input = fixture.debugElement.query(By.css('input')).nativeElement;
     expect(input.placeholder).toBe('Enter country');
   });
 
   it('should get filterCountries method', fakeAsync(() => {
+    input = fixture.debugElement.query(By.css('input')).nativeElement;
     fixture.detectChanges();
     input.value = 'f';
     input.dispatchEvent(new Event('input'));
@@ -97,6 +99,7 @@ describe('AppComponent', () => {
   }));
 
   it('should get filterCountries method enter \'f\' then \'s\'', fakeAsync(() => {
+    input = fixture.debugElement.query(By.css('input')).nativeElement;
     fixture.detectChanges();
     input.value = 'f';
     expect(component.filteredCountries).toEqual([]);
