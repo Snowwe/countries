@@ -2,7 +2,7 @@ import {AppComponent, MySource} from './app.component';
 import {MockApiService} from './services/api.service.mock';
 import {
   TestBed, ComponentFixture,
-  tick, inject, fakeAsync
+  tick, fakeAsync
 } from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
@@ -63,12 +63,12 @@ describe('AppComponent', () => {
     expect(component.noMatches).toBeFalsy();
   });
 
-  it(`should set reset to true`, () => {
+  it('should set reset to true', () => {
     component.resetInputValue();
     expect(component.resetClick$).toBeTruthy();
   });
 
-  it(`should call the reset method`, () => {
+  it('should call the reset method', () => {
     spyOn(component, 'resetInputValue').and.callThrough();
     const resetButton = fixture.debugElement.query(By.css('button'));
     resetButton.triggerEventHandler('click', null);
