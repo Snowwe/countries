@@ -1,7 +1,7 @@
 import {AppComponent, MySource} from './app.component';
 import {MockApiService} from './services/api.service.mock';
 import {
-  TestBed, async, ComponentFixture,
+  TestBed, ComponentFixture,
   tick, inject, fakeAsync
 } from '@angular/core/testing';
 import {MatAutocompleteModule} from '@angular/material';
@@ -28,7 +28,7 @@ describe('AppComponent', () => {
     AppComponent,
     {set: {providers: [{provide: ApiService, useClass: MockApiService}]}}
   );
-  beforeEach(async(() => {
+  beforeEach(() => {
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
@@ -40,13 +40,12 @@ describe('AppComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [{provide: ApiService, useClass: MockApiService}],
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(AppComponent);
-      component = fixture.componentInstance;
-      apiService = TestBed.get(ApiService);
-      fixture.detectChanges();
-    });
-  }));
+    }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    apiService = TestBed.get(ApiService);
+    fixture.detectChanges();
+  });
 
   it('should create the app', () => {
     expect(component).toBeTruthy();
