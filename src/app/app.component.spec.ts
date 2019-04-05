@@ -63,11 +63,6 @@ describe('AppComponent', () => {
     expect(component.noMatches).toBeFalsy();
   });
 
-  it('should set reset to true', () => {
-    component.resetInputValue();
-    expect(component.resetClick$).toBeTruthy();
-  });
-
   it('should call the reset method', () => {
     spyOn(component, 'resetInputValue').and.callThrough();
     const resetButton = fixture.debugElement.query(By.css('button'));
