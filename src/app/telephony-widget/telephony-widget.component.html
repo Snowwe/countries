@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-actions>
+    <button *ngIf="isCall" mat-raised-button color="primary"
+            (click)="onCall()">
+      <i class="material-icons">
+        call
+      </i>
+    </button>
+    <button *ngIf="!isCall" mat-raised-button color="warn"
+            (click)="onCall()">
+      <i class="material-icons">
+        call_end
+      </i>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<!--<h1 mat-dialog-title>You enter {{inputCountry?.value}}</h1>-->
+<!--<div mat-dialog-content>-->
+<!--<p>What's your favorite animal?</p>-->
+<!--<mat-form-field>-->
+<!--<input matInput [(ngModel)]="data.animal">-->
+<!--</mat-form-field>-->
+<!--</div>-->
+<!--<div mat-dialog-actions>-->
+<!--<button mat-button (click)="onNoClick()">No Thanks</button>-->
+<!--<button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
+<!--</div>-->
+
