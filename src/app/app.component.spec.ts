@@ -57,6 +57,34 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  // it('should set reset to true', () => {
+  //   // input = fixture.debugElement.query(By.css('input')).nativeElement;
+  //   component.resetClick$
+  //     .pipe(
+  //       tap(() => {
+  //         component.inputCountry.reset('');
+  //       }),
+  //     ).subscribe(() =>
+  //     expect(input.value).toBe('')
+  //   );
+  //   (component.resetClick$ as Subject).next(true);
+  // });
+
+  it('should reset input value', fakeAsync(() => {
+    component.inputCountry.setValue('123');
+    const inputValue = component.inputCountry.value; // тут одно значение
+
+    component.resetClick$.subscribe(value => {
+      expect(inputValue).toBe(''); // событие которое у тебя отвечает за сброс
+    });
+
+    component.resetInputValue();
+    tick(1000); // подождать что отработает поток
+    // fixture.detectChanges();
+    expect(inputValue).not.toBe(component.inputCountry.value);
+    expect(component.inputCountry.value).toBe('');
+  }));
+
   it('should get isEmpty, isLoading, noMatches are default false', () => {
     expect(component.isEmpty).toBeFalsy();
     expect(component.isLoading).toBeFalsy();
