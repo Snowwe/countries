@@ -11,4 +11,5 @@ export class TelephonyWidgetComponent {
   onCall() {
     this.isCall = !this.isCall;
   }
+
 }
