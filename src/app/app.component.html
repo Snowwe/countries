@@ -31,10 +31,13 @@
   </mat-form-field>
 </form>
 
-<div appMyDir>MyDirDirective</div>
-<div *appStructDir="condition">first</div>
-<div *appStructDir="!condition">second</div>
+<!--<div appMyDir>MyDirDirective</div>-->
+<!--<div *appStructDir="condition">first</div>-->
+<!--<div *appStructDir="!condition">second</div>-->
 
-<div>{{filteredCountries | myPipe}}</div>
+<!--<div>{{filteredCountries | myPipe}}</div>-->
 
-<app-telephony-widget></app-telephony-widget>
+<app-telephony-widget>
+  <p>Hello</p>
+  <app-phone-form></app-phone-form>
+</app-telephony-widget>
