@@ -1,4 +1,4 @@
-import {MySource} from '../app.component';
+import {MySource} from '../../app.component';
 import {of} from 'rxjs/internal/observable/of';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {inject, TestBed} from '@angular/core/testing';

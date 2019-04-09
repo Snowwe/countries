@@ -1,12 +1,12 @@
 import {AppComponent, MySource} from './app.component';
-import {MockApiService} from './services/api.service.mock';
+import {MockApiService} from './services/api/api.service.mock';
 import {
   TestBed, ComponentFixture,
   tick, fakeAsync
 } from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import {ApiService} from './services/api.service';
+import {ApiService} from './services/api/api.service';
 import {Directive, NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 

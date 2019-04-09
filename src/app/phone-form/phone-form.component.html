@@ -1,0 +1,13 @@
+<section *ngIf="isOpen">
+  <h1 mat-dialog-title>Your choice</h1>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary">
+      <i class="material-icons">check_box</i>
+    </button>
+    <button mat-raised-button color="warn" (click)="onOpen()">
+      <i class="material-icons">cancel_presentation</i>
+    </button>
+
+  </div>
+</section>
+
