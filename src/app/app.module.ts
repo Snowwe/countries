@@ -9,7 +9,8 @@ import {
   MatAutocompleteModule,
   MatFormFieldModule,
   MatProgressSpinnerModule,
-  MatIconModule, MatDialogModule
+  MatIconModule, MatDialogModule,
+  MatSelectModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { MyDirDirective } from './directives/my-dir.directive';
@@ -39,7 +40,8 @@ import { PhoneFormComponent } from './phone-form/phone-form.component';
     HttpClientModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

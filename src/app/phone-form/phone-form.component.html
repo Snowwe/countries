@@ -7,15 +7,37 @@
     </button>
   </mat-card-actions>
 </mat-card>
-
 <section *ngIf="isOpen">
-  <h1 mat-dialog-title>Your choice</h1>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Select id</mat-label>
+      <mat-select formControlName="id">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let option of data | async" [value]="option.id">
+          <span>{{option.id}}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select title</mat-label>
+      <mat-select formControlName="title">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let option of data | async" [value]="option.title">
+          <span>{{option.title}}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <p>You selected: {{saveData['id']}}: {{saveData['title']}}</p>
+
   <div mat-dialog-actions>
-    <button mat-raised-button color="primary">
-      <i class="material-icons">check_box</i>
+    <button mat-raised-button color="primary" (click)="onSelectedSave()">
+      <i class="material-icons">done</i>
     </button>
-    <button mat-raised-button color="warn" (click)="onOpen()">
-      <i class="material-icons">cancel_presentation</i>
+    <button mat-raised-button color="warn" (click)="onClear()">
+      <i class="material-icons">clear</i>
     </button>
   </div>
+
 </section>
