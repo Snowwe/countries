@@ -1,4 +1,4 @@
-<ng-content></ng-content>
+<ng-content *ngIf="!isCall"></ng-content>
 <mat-card>
   <mat-card-actions>
     <button *ngIf="isCall" mat-raised-button color="primary"

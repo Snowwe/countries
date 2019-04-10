@@ -1,5 +1,6 @@
 mat-card {
   position: fixed;
+  z-index: 6;
   top: 20px;
   right: 20px;
 }
