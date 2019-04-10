@@ -1,3 +1,13 @@
+<mat-card>
+  <mat-card-actions>
+    <button mat-raised-button color="primary"
+            (click)="onOpen()">
+      <i *ngIf="isOpen" class="material-icons"> keyboard_arrow_up </i>
+      <i *ngIf="!isOpen" class="material-icons"> keyboard_arrow_down </i>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
 <section *ngIf="isOpen">
   <h1 mat-dialog-title>Your choice</h1>
   <div mat-dialog-actions>

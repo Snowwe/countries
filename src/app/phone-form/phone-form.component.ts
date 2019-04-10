@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./phone-form.component.css']
 })
 export class PhoneFormComponent {
-  isOpen = true;
+  isOpen = false;
 
   onOpen() {
     this.isOpen = !this.isOpen;
