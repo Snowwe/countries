@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {Call, CallService} from '../services/call/call.service';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-telephony-widget',
@@ -7,8 +9,19 @@ import {Component} from '@angular/core';
 })
 export class TelephonyWidgetComponent {
   isCall = true;
+  currentCall$: Observable<Call>;
+
+  constructor(private callService: CallService) {
+    this.currentCall$ = this.callService.getCurrentCall$();
+  }
 
   onCall() {
     this.isCall = !this.isCall;
+    if (this.isCall) {
+      const phone = Math.floor(Math.random() * 1000000000);
+      this.callService.makeCall({phone});
+    } else {
+      this.callService.completeCall();
+    }
   }
 }
