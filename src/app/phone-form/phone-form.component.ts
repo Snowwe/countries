@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ApiService} from '../services/api/api.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
@@ -17,6 +17,7 @@ export class PhoneFormComponent implements OnInit {
     id: new FormControl(),
     title: new FormControl(),
   });
+  @Input() countrySave;
 
   constructor(private apiService: ApiService,
               private formBuilder: FormBuilder) {

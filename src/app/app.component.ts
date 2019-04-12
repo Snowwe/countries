@@ -33,6 +33,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private componentDestroyed = new Subject();
   apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
+  // @Output() countrySave = 'nnn';
+
   constructor(private apiService: ApiService) {
   }
 
