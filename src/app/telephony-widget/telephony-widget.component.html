@@ -1,17 +1,14 @@
 <ng-content *ngIf="!isCall"></ng-content>
 <mat-card>
   <mat-card-actions>
-    <button *ngIf="isCall" mat-raised-button color="primary"
-            (click)="onCall()">
-      <i class="material-icons">
-        call
-      </i>
-    </button>
-    <button *ngIf="!isCall" mat-raised-button color="warn"
-            (click)="onCall()">
-      <i class="material-icons">
-        call_end
-      </i>
+    <button mat-raised-button (click)="onCall()"
+    [ngClass]="isCall ? 'mat-primary' : 'mat-warn'">
+    <i *ngIf="isCall" class="material-icons">
+      call
+    </i>
+    <i *ngIf="!isCall" class="material-icons">
+      call_end
+    </i>
     </button>
   </mat-card-actions>
 </mat-card>
