@@ -1,0 +1,15 @@
+.mat-raised-button{
+  margin: 5px;
+  min-width: 32px;
+  width: 32px;
+  padding: 0;
+}
+section{
+  position: fixed;
+  right: 20px;
+  bottom: 75px;
+  border: 1px solid #dc797c;
+  padding: 15px;
+  background: #90a3ff;
+  border-radius: 3%;
+}

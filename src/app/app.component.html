@@ -16,7 +16,7 @@
       </mat-option>
       <ng-container *ngIf="!isLoading">
         <mat-option *ngFor="let option of filteredCountries" [value]="option.title">
-          <span>{{option.title}}</span>
+          <span>{{option | myPipe}}</span>
         </mat-option>
       </ng-container>
 
@@ -30,3 +30,13 @@
 
   </mat-form-field>
 </form>
+
+<!--<div appMyDir>MyDirDirective</div>-->
+<!--<div *appStructDir="condition">first</div>-->
+<!--<div *appStructDir="!condition">second</div>-->
+
+<!--<div>{{filteredCountries | myPipe}}</div>-->
+
+<app-telephony-widget>
+  <app-phone-form></app-phone-form>
+</app-telephony-widget>

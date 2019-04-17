@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -9,13 +9,23 @@ import {
   MatAutocompleteModule,
   MatFormFieldModule,
   MatProgressSpinnerModule,
-  MatIconModule
+  MatIconModule, MatDialogModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { MyDirDirective } from './directives/my-dir.directive';
+import { StructDirDirective } from './directives/struct-dir.directive';
+import { MyPipePipe } from './pipes/my-pipe.pipe';
+import { TelephonyWidgetComponent } from './telephony-widget/telephony-widget.component';
+import { PhoneFormComponent } from './phone-form/phone-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MyDirDirective,
+    StructDirDirective,
+    MyPipePipe,
+    TelephonyWidgetComponent,
+    PhoneFormComponent
   ],
   imports: [
     BrowserModule,
@@ -29,9 +39,11 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {
 }

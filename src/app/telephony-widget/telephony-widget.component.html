@@ -1,0 +1,17 @@
+<ng-content></ng-content>
+<mat-card>
+  <mat-card-actions>
+    <button *ngIf="isCall" mat-raised-button color="primary"
+            (click)="onCall()">
+      <i class="material-icons">
+        call
+      </i>
+    </button>
+    <button *ngIf="!isCall" mat-raised-button color="warn"
+            (click)="onCall()">
+      <i class="material-icons">
+        call_end
+      </i>
+    </button>
+  </mat-card-actions>
+</mat-card>
