@@ -13,7 +13,6 @@ export interface MySource {
   userId: string;
   id?: string;
   title?: string;
-  completed?: boolean;
 }
 
 @Component({
@@ -21,7 +20,9 @@ export interface MySource {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   providers: [ApiService],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class AppComponent implements OnInit, OnDestroy {
   inputCountry = new FormControl();
   countriesArr: MySource[];

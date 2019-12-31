@@ -1,7 +1,7 @@
-<mat-card>
+<mat-card >
   <mat-card-actions>
     <button mat-raised-button color="primary"
-            (click)="onOpen()">
+            (click)="onOpen()" *ngIf="currentCall$ | async">
       <i *ngIf="isOpen" class="material-icons"> keyboard_arrow_up </i>
       <i *ngIf="!isOpen" class="material-icons"> keyboard_arrow_down </i>
     </button>

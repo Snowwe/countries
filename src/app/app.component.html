@@ -16,7 +16,7 @@
       </mat-option>
       <ng-container *ngIf="!isLoading">
         <mat-option *ngFor="let option of filteredCountries" [value]="option.title">
-          <span>{{option | myPipe}}</span>
+          <span>{{option.title}}</span>
         </mat-option>
       </ng-container>
 
@@ -39,4 +39,5 @@
 
 <app-telephony-widget>
   <app-phone-form [countrySave]="inputCountry"></app-phone-form>
+
 </app-telephony-widget>
